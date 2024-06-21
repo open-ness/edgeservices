@@ -64,7 +64,7 @@ fail_if_var_empty() {
 get_node_service() {
     node=${1:-}
     svc=${2:-}
-    endpoints=$(kubectl get endpoints -o custom-columns=NAME:.metadata.name,NODE:.subsets[*].addresses[*].ip,IP:.subsets[*].addresses[*].nodeName -n openness --no-headers | grep "^${svc}")
+    endpoints=$(kubectl get endpoints -o custom-columns=NAME:.metadata.name,NODE:.subsets[*].addresses[*].ip,IP:.subsets[*].addresses[*].nodeName -n openness --no-headers | grep "^${svc}" | grep "${node}")
 
     if [[ ! "${endpoints}" ]] ; then
         error "Service '${svc}' not found on node '${node}'"
